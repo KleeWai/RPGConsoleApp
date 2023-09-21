@@ -9,11 +9,13 @@ namespace RPG.monsters
         public IceMonster(int lvl)
         {
             isAlive = true;
+            if(lvl <= 0) 
+                lvl = 1;
             level = lvl;
             name = "Henry";
             type = "Ice";
             dps = level * 10;
-            hp = level * 100;
+            hp = level * 80;
         }
         public override List<string> Attack(Player p)
         {
@@ -59,9 +61,12 @@ namespace RPG.monsters
         public override string LootDrop(Player p)
         {
             Random rand = new Random();
-            int add = (rand.Next(this.level * 10, this.level * 20));
-            p.coins += add;
-            string res = ($"You have gotten {add} coins from {name}!! YOu now have {p.coins} coins");
+            int addcoins = (rand.Next(this.level * 10, this.level * 20));
+            int addxp = (rand.Next(this.level * 10, this.level * 20));
+            p.coins += addcoins;
+            p.Addxp(addxp);    
+            string res = ($"You have gotten {addcoins} coins from {name}!! You now have {p.coins} coins");
+            res += ($"\nYou have gotten {addxp} xp from {name}!! {p.level.StringPlayerLevelAndXp()}");
             return res;
         }
     }

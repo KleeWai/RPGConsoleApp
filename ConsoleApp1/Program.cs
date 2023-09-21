@@ -15,8 +15,10 @@ namespace RPG
             Console.WriteLine("Enter your player name");
             string n = Console.ReadLine();
             Player p = new Player(n);
-             Start s = new Start(p);
+            Start s = new Start(p);
+            Console.WriteLine("Type mawohelp for list of available commands");
             Environment e = new Environment(p);
+
             e.StartGame();
 
         }

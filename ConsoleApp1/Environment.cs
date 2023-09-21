@@ -1,6 +1,7 @@
 ﻿using RPG.monsters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace RPG
     {
         Player player;
         bool inProgress = false;
+        bool hasHuntedRecently = false;
+        Stopwatch huntTimer = new Stopwatch();
         public Environment(Player p) 
         {
             player = p;
@@ -21,15 +24,63 @@ namespace RPG
             inProgress = true;
 
             string input = Console.ReadLine();
-            while(!input.Equals("q")) 
+            
+            while (!input.Equals("q")) 
             {
                 if (input != null)
-                {
+                {           
                     input = input.ToLower();
                     if (input.Equals("mawoh"))
                     {
-                        Console.WriteLine($"{player.name} has gone into battle!");
-                        SpawnMonster();
+                        if(huntTimer.IsRunning &&  huntTimer.Elapsed.TotalSeconds < 3 )
+                        {
+                            Console.WriteLine($"YOU HAVE HUNTED RECENTLY! Please hunt again in {3- huntTimer.Elapsed.TotalSeconds} seconds");
+                            StartGame();
+                        }
+                        else
+                        {
+                            huntTimer.Restart();
+                            Console.WriteLine($"{player.name} has gone into battle!");
+                            SpawnMonster();
+                        }               
+                    }
+                    if(input.Equals("mawolvl"))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine($"{player.level.StringPlayerLevelAndXp()}");
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    if (input.Equals("mawostats"))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine($"You have killed {player.MonstersKilled} monsters!");
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    if (input.Equals("mawohelp"))
+                    {
+                        Console.WriteLine(Constants.mawoHelp);
+                    }
+                    if (input.Equals("mawoshop"))
+                    {
+                        Shop s = new Shop(player);
+                        Console.WriteLine(s.printShop());
+                        Console.WriteLine($"Enter an id number to purchase. You have {player.coins} coins. (Type anything else to quit)");
+                        string purchaseID = Console.ReadLine();
+                        try
+                        {
+                            int parsed = Int32.Parse(purchaseID);
+                            Console.WriteLine(s.purchase(parsed));
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Unable to buy");
+                        }
+                    }
+                    if (input.Equals("secret"))
+                    {
+                        Constants.SecretSong();
                     }
                 }
                 inProgress = false;
@@ -46,7 +97,7 @@ namespace RPG
         public void SpawnMonster()
         {
             Random rand = new Random();
-            int randlvl = rand.Next(1, player.returnLevel()+3);
+            int randlvl = rand.Next(player.returnLevel() - 3, player.returnLevel()+3);
             int randMonster = rand.Next(0, 100);
             Monster monster;
             if(randMonster < 33)
@@ -73,7 +124,10 @@ namespace RPG
                 }
                 if(player.health <= 0)
                 {
-                    Console.WriteLine($"{player.name} has died!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{player.name} has died! You have gotten nothing from {monster.name}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
                 }
                 List<string> playerAttacks = player.weapon.Attack(monster);
                 foreach (string attack in playerAttacks)
@@ -84,7 +138,10 @@ namespace RPG
             }
             if(!monster.isAlive)
             {
+                player.MonstersKilled++;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(monster.LootDrop(player));
+                Console.ForegroundColor = ConsoleColor.White;
             }
 
             inProgress = false;

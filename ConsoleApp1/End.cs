@@ -23,5 +23,10 @@ namespace RPG
             string json = JsonConvert.SerializeObject(items, Formatting.Indented);
             File.WriteAllText(FilePath, json);
         }
+
+        public void SaveAll(List<Item> items) 
+        {
+
+        }
     }
 }

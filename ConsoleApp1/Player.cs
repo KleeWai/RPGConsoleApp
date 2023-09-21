@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using RPG.debuffs;
 using RPG.weapons;
 using RPG.jsonstuff;
+using RPG.Items;
 
 namespace RPG
 {
@@ -18,11 +19,12 @@ namespace RPG
         public int coins { get; set; }
         public List<Debuff> debuffs { get; set; }
         public double DamageFactor { get; set; } = 1.0;//Damage taken factor
+        public int MonstersKilled { get; set; } = 0;
 
         [JsonConverter(typeof(WeaponConverter))]
         public Weapon weapon { get; set; }
 
-        public List<Items.Item> Inventory { get; set; }
+        public List<Item> Inventory { get; set; }
         public Player(string name)
         {
             this.name = name;
@@ -36,6 +38,19 @@ namespace RPG
         public int returnLevel()
         {
             return level.currLevel;
+        }
+
+        public void Addxp(int xp)
+        {
+            level.AddLevelToPlayer(xp);
+        }
+
+        public void AddItem(Item item)
+        {
+            if(item is Item)
+            {
+                Inventory.Add(item);
+            }
         }
     }
 }

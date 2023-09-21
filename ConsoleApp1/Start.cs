@@ -14,7 +14,7 @@ namespace RPG
 
     class Start
     {
-        private const string FILE_NAME = Constants.SaveFileName;
+        private string FILE_NAME = Constants.SaveFileName;
         public Start(Player p) 
         {
             if (File.Exists(FILE_NAME))
@@ -141,6 +141,17 @@ namespace RPG
             {
                 return new List<Item>(); // Return an empty list if the file doesn't exist.
             }
+        }
+
+        public string Help()
+        {
+            string res = string.Empty;
+            res += ($"Hi! here are all the commands in MAWO\n");
+            res += ($"mawohelp - shows all possible commands\n");
+            res += ($"mawolvl - shows your current player level\n");
+            res += ($"mawostats - shows your current player stats\n");
+            res += ($"mawoh - hunt monsters\n");
+            return res;
         }
     }
 }
