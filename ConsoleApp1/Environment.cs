@@ -103,6 +103,28 @@ namespace RPG
                             }
                         }
                     }
+                    if (input.Equals("mawoweapon"))
+                    {
+                        Console.WriteLine($"{player.weapon.WeaponInfo()}");
+                        Console.WriteLine("To rename your weapon, type mrename (costs 100 coins) (Anything else to continue)");
+                        string i = Console.ReadLine();
+                        if (i.Equals("mrename"))
+                        {
+                            Console.WriteLine("What do you want to rename to?");
+                            string renamestring = Console.ReadLine();
+                            if(player.coins > 100)
+                            {
+                                player.coins = player.coins - 100;
+                                player.weapon.Name = renamestring;
+                                Console.WriteLine($"Weapon succesfully renamed to {renamestring}");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Not eneough coins!!");
+                            }
+                            
+                        }
+                    }
                 }
                 inProgress = false;
                 input = Console.ReadLine();
