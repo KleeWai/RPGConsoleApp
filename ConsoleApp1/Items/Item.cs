@@ -13,7 +13,7 @@ namespace RPG.Items
         public string Name { get; set; }
         public string Description { get; set; }
         public int Cost { get; set; }
-
+        public int Count { get; set; } = 1;
         public Item() 
         {
             Cost = 0;

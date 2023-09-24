@@ -14,7 +14,9 @@ namespace RPG
         //bool isNew { get; set; } = false;
         public double health { get; set; }
         public double maximumHealth { get; set; }
+        public double healthFactor { get; set; } = 1.0;
         public Level level { get; set; } = new Level();
+        public int currXp { get; set; } = 0; // THIS SHOULD ONLY BE USED FOR SAVING
         public string name { get; }
         public int coins { get; set; }
         public List<Debuff> debuffs { get; set; }
@@ -30,7 +32,7 @@ namespace RPG
             this.name = name;
             debuffs = new List<Debuff>();
             Inventory = new List<Items.Item>();
-            maximumHealth = level.currLevel * 100.0;
+            maximumHealth = level.currLevel * 100.0 * healthFactor;
             health = maximumHealth;
             weapon = new Hand();
         }
@@ -45,10 +47,30 @@ namespace RPG
             level.AddLevelToPlayer(xp);
         }
 
+        public string StringInventory()
+        {
+            string res = string.Empty;
+            int count = 0;
+            foreach(var item in Inventory)
+            {
+                res += $" id: {count}, Name: {item.Name}, Count: {item.Count}\n";
+                count++;
+            }
+            return res;
+        }
+
         public void AddItem(Item item)
         {
             if(item is Item)
             {
+                foreach(Item i in Inventory)
+                {
+                    if(i.Name.Equals(item.Name))
+                    {
+                        i.Count++;
+                        return;
+                    }
+                }
                 Inventory.Add(item);
             }
         }

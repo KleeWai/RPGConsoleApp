@@ -20,6 +20,10 @@ namespace RPG.weapons
         public abstract List<string> Attack(Monster m);
 
         public Weapon() { }
+
+        public abstract string WeaponInfo();
+
+        public abstract void setDpsFromSave(int level);
     }
 
     

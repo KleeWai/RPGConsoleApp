@@ -11,7 +11,7 @@ namespace RPG
         public const string WeakenDebuff = "Weaken";
         public const string SaveFileName = "NOTASAVEFILE.txt";
         public const string mawoHelp = "Hi! here are all the commands in MAWO\nmawohelp - shows all possible commands\nmawolvl - shows your current player level\n" +
-            "mawostats - shows your current player stats\nmawoh - hunt monsters\nmawoshop - Opens the shop\n";
+            "mawostats - shows your current player stats\nmawoh - hunt monsters\nmawoshop - Opens the shop\nmawoinv - Opens the inventory";
 
         public static void SecretSong()
         {

@@ -49,7 +49,7 @@ namespace RPG.debuffs
 
         public void AddStrengthen(Player p)
         {
-            p.health *= 2;
+            p.healthFactor *= 2;
             count++;
             p.debuffs.Add(this);
         }

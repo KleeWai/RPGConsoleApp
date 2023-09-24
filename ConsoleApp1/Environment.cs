@@ -32,7 +32,7 @@ namespace RPG
                     input = input.ToLower();
                     if (input.Equals("mawoh"))
                     {
-                        if(huntTimer.IsRunning &&  huntTimer.Elapsed.TotalSeconds < 3 )
+                        if(huntTimer.IsRunning &&  huntTimer.Elapsed.TotalSeconds < 0.13 )
                         {
                             Console.WriteLine($"YOU HAVE HUNTED RECENTLY! Please hunt again in {3- huntTimer.Elapsed.TotalSeconds} seconds");
                             StartGame();
@@ -55,6 +55,9 @@ namespace RPG
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine($"You have killed {player.MonstersKilled} monsters!");
+                        Console.WriteLine($"{player.level.StringPlayerLevelAndXp()}");
+                        Console.WriteLine($"{player.weapon.WeaponInfo()}");
+                        Console.WriteLine($"Coins: {player.coins}");
                         Console.WriteLine();
                         Console.ForegroundColor = ConsoleColor.White;
                     }
@@ -66,7 +69,7 @@ namespace RPG
                     {
                         Shop s = new Shop(player);
                         Console.WriteLine(s.printShop());
-                        Console.WriteLine($"Enter an id number to purchase. You have {player.coins} coins. (Type anything else to quit)");
+                        Console.WriteLine($"Enter an id number to purchase. You have {player.coins} coins. (Type anything else to quit shop menu)");
                         string purchaseID = Console.ReadLine();
                         try
                         {
@@ -82,6 +85,24 @@ namespace RPG
                     {
                         Constants.SecretSong();
                     }
+                    if (input.Equals("mawoinv"))
+                    {
+                        Console.WriteLine(player.StringInventory());
+                        Console.WriteLine("Type muse<id> to use");
+                        string use = Console.ReadLine();
+                        if(use != null && use.Substring(0,4).Equals("muse"))
+                        {
+                            try
+                            {
+                                int parsed = Int32.Parse(use.Substring(3));
+                                Console.WriteLine(parsed);
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Unable to use");
+                            }
+                        }
+                    }
                 }
                 inProgress = false;
                 input = Console.ReadLine();
@@ -90,6 +111,7 @@ namespace RPG
             {
                 End e = new End(player);
                 e.SaveInventory(player.Inventory);
+                e.SaveAll();
                 System.Environment.Exit(0);
             }
         }

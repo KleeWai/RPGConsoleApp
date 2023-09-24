@@ -23,7 +23,7 @@ namespace RPG
                 //p = DeserializePlayerFromJsonFile();
                 Console.WriteLine($"{FILE_NAME} already exists! Using save file to populate data!");
                 string[] lines = File.ReadAllLines(FILE_NAME);
-                int breakline = 0;
+                int breakline = 0; // used to find where to stop so can start populating weapon data now
                 foreach (string line in lines)
                 {
                     // Split the line into property name and value
@@ -42,6 +42,10 @@ namespace RPG
                                 Level l = new Level();
                                 l.SetLevel(Int32.Parse(propertyValue));
                                 p.level = l;
+                            }
+                            else if(property.Name == "currXp")
+                            {
+                                p.level.currXp = Int32.Parse(propertyValue);
                             }
                             else if (property.Name == "name")
                             {
@@ -93,6 +97,7 @@ namespace RPG
                             Level l = new Level();
                             l.SetLevel(Int32.Parse(propertyValue));
                             p.weapon.Level = l;
+                            p.weapon.setDpsFromSave(int.Parse(propertyValue));
                         }
                     }
                 }

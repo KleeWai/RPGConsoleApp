@@ -33,5 +33,17 @@ namespace RPG.weapons
             return res;
         }
 
+        public override string WeaponInfo()
+        {
+            string res = string.Empty;
+            res+= $"Weapon type: {type} Name: {Name} DPS: {Dps} Level: {Level.StringWeaponLevelAndXp()}\n";
+            return res;
+        }
+
+        public override void setDpsFromSave(int level)
+        {
+            Dps = 10.0 * (1.0+(((double)(level))/(100.0)));
+        }
+
     }
 }

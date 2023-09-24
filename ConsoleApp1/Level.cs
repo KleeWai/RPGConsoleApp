@@ -8,7 +8,7 @@ namespace RPG
     {
         public int currLevel { get; set; }
         int fullRequiredXp { get; set; }
-        int currXp { get; set; }
+        public int currXp { get; set; }
 
 
         public Level()
@@ -65,6 +65,13 @@ namespace RPG
         }
 
         public string StringPlayerLevelAndXp()
+        {
+            string res;
+            res = ($"Level = {currLevel}, {currXp}/{fullRequiredXp}");
+            return res;
+        }
+
+        public string StringWeaponLevelAndXp()
         {
             string res;
             res = ($"Level = {currLevel}, {currXp}/{fullRequiredXp}");
