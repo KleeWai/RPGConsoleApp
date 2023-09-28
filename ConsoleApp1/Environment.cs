@@ -32,9 +32,9 @@ namespace RPG
                     input = input.ToLower();
                     if (input.Equals("mawoh"))
                     {
-                        if(huntTimer.IsRunning &&  huntTimer.Elapsed.TotalSeconds < 0.13 )
+                        if(huntTimer.IsRunning &&  huntTimer.Elapsed.TotalSeconds < Constants.TimerDelay )
                         {
-                            Console.WriteLine($"YOU HAVE HUNTED RECENTLY! Please hunt again in {3- huntTimer.Elapsed.TotalSeconds} seconds");
+                            Console.WriteLine($"YOU HAVE HUNTED RECENTLY! Please hunt again in {Constants.TimerDelay - huntTimer.Elapsed.TotalSeconds} seconds");
                             StartGame();
                         }
                         else
