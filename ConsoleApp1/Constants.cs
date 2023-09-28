@@ -7,6 +7,7 @@ namespace RPG
 {
     static class Constants
     {
+        public const double TimerDelay = 1;
         public const string NullifyDebuff = "Nullify";
         public const string WeakenDebuff = "Weaken";
         public const string SaveFileName = "NOTASAVEFILE.txt";
@@ -21,3 +22,4 @@ namespace RPG
         }
     }
 }
+
