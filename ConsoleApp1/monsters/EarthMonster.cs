@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using RPG.debuffs;
 
 namespace RPG.monsters
 {
@@ -28,13 +29,13 @@ namespace RPG.monsters
                 isAlive = false;
                 return new List<string>();
             }
-            foreach (debuffs.Debuff d in p.debuffs)
+            foreach (Debuff d in p.debuffs)
             {
                 if (d.count <= 0)
                 {
                     p.debuffs.Remove(d);
                 }
-            }
+            } 
             List<string> res = new List<string>();
             res.Add($"{name} the {type} monster does {dps} damage to {p.name}");
             p.health -= dps * (p.DamageFactor);

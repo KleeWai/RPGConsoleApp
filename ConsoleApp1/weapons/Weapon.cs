@@ -12,11 +12,6 @@ namespace RPG.weapons
         public double Dps { get; set; }
         public double damageFactor { get; set; } = 1.0;
 
-        public double getDamageFactor()
-        {
-            return damageFactor;
-        }
-
         public abstract List<string> Attack(Monster m);
 
         public Weapon() { }

@@ -22,7 +22,7 @@ namespace RPG.debuffs
                     description = "take more dmg";
                     AddWeaken(p);
                     break;
-                case "Wullify":
+                case "Nullify":
                     description = "do less dmg";
                     AddNullify(p);
                     break;
